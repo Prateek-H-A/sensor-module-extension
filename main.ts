@@ -1217,9 +1217,6 @@ namespace TM1650 {
 
     on();
 }
-
-
-//% color="#3CB371" weight=20 icon="\uf0a1"
 namespace Speech {
 
     const DATA_HEAD = 0xFD                  //帧头
@@ -1258,8 +1255,8 @@ namespace Speech {
 
     function IIC_Writes(date: number[], size: number): void {
 
-        for (let i = 0; i < size; i++) {
-            pins.i2cWriteNumber(I2C_ADDR, date[i], NumberFormat.UInt8LE, false);
+        for (let q = 0; q < size; q++) {
+            pins.i2cWriteNumber(I2C_ADDR, date[q], NumberFormat.UInt8LE, false);
             basic.pause(10);
         }
     }
@@ -1275,9 +1272,9 @@ namespace Speech {
         let length_LL = num & 0xff;
         let commond = 0x01;
 
-        let buf: number[] = [DATA_HEAD, length_HH, length_LL, commond, 0x00];
+        let buf4: number[] = [DATA_HEAD, length_HH, length_LL, commond, 0x00];
 
-        IIC_Writes(buf, 5);
+        IIC_Writes(buf4, 5);
 
         for (let ch of speech_text) {
             pins.i2cWriteNumber(I2C_ADDR, ch.charCodeAt(0), NumberFormat.UInt8LE, false);
@@ -1316,8 +1313,8 @@ namespace Speech {
 
         basic.pause(100);
 
-        let result = pins.i2cReadNumber(I2C_ADDR, NumberFormat.UInt8LE, false);
-        return result;
+        let result2 = pins.i2cReadNumber(I2C_ADDR, NumberFormat.UInt8LE, false);
+        return result2;
 
     }
 
@@ -1343,18 +1340,18 @@ namespace Speech {
     }
 
     function SetBase(str: string): void {
-        let num = str.length + 2;
-        let total_num = str.length;
-        let length_HH = num >> 8;
-        let length_LL = num & 0xff;
-        let commond = 0x01;
+        let num2 = str.length + 2;
+        let total_num2 = str.length;
+        let length_HH2 = num2 >> 8;
+        let length_LL2 = num2 & 0xff;
+        let commond2 = 0x01;
 
-        let buf: number[] = [DATA_HEAD, length_HH, length_LL, commond, 0];
+        let buf5: number[] = [DATA_HEAD, length_HH2, length_LL2, commond2, 0];
 
-        IIC_Writes(buf, 5);
+        IIC_Writes(buf5, 5);
 
-        for (let i = 0; i < total_num; i++) {
-            pins.i2cWriteNumber(I2C_ADDR, str.charCodeAt(i), NumberFormat.UInt8LE, false);
+        for (let r = 0; r < total_num2; r++) {
+            pins.i2cWriteNumber(I2C_ADDR, str.charCodeAt(r), NumberFormat.UInt8LE, false);
         }
 
     }
@@ -1717,5 +1714,3 @@ namespace Speech {
 
 
 }
-
-
